@@ -610,3 +610,15 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.time_trace_tab), _translate("MainWindow", "Time Trace"))
         self.menuView.setTitle(_translate("MainWindow", "View"))
         self.actionDark_mode.setText(_translate("MainWindow", "Dark mode"))
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(MyWindow, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication([])
+    application = MyWindow()
+    application.show()
+    sys.exit(app.exec())
