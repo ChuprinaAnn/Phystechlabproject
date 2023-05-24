@@ -31,13 +31,15 @@ light -- display brightness (0...255)
 
 '''
 piconame = "piezojena NV40/3CL USB"
+ports = list(list_ports.comports())
+
 resultPorts = []
 descriptions = []
 com_port_piezo = ''
 for port in ports:
     if port.device:
-        resultPorts = []
-        descriptions = []
+        resultPorts.append(port.device)
+        descriptions.append(str(port.description))
 for i in description:
     if i == piconame:
         com_port_piezo = resultPorts[i]
