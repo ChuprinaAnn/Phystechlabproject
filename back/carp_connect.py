@@ -1,3 +1,4 @@
+import si as si
 from serial.tools import list_ports
 import serial, time
 import numpy as np
@@ -198,16 +199,17 @@ class Piezo(si.SerialInstrument):
 
     def scan_3d_free(self, data_points, units=['u', 'u', 'u'], aq_time=0.1):
         multiplier = [1, 1, 1]
-        for i in range(len(unit)):
-            if unit[i] == 'u':
+        for i in range(len(units)):
+            if units[i] == 'u':
                 multiplier[i] = 1
-            elif unit[i] == 'n':
+            elif units[i] == 'n':
                 multiplier[i] = 0.001
             else:
                 print('Invalid units!')
         for i in len(data_points):
-            if data_points < 0 or data_points > multiplier * 80:
-                print('Data points are out of range!')
+            for j in len(data_points):
+                if data_points[i][j] < 0 or data_points[i][j] > multiplier * 80:
+                    print('Data points are out of range!')
         x_list = [j for j in data_points[0][j]]
         y_list = [j for j in data_points[1][j]]
         z_list = [j for j in data_points[2][j]]
