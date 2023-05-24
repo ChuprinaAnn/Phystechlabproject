@@ -40,7 +40,7 @@ for port in ports:
     if port.device:
         resultPorts.append(port.device)
         descriptions.append(str(port.description))
-for i in description:
+for i in descriptions:
     if i == piconame:
         com_port_piezo = resultPorts[i]
 
