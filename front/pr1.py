@@ -234,3 +234,166 @@ class Ui_MainWindow(object):
         self.z_left_smol_step.setText(_translate("MainWindow", "<"))
         self.label_set_smol_step.setText(_translate("MainWindow", "Set Small Step (nm)"))
         self.label_set_big_step.setText(_translate("MainWindow", "Set Big Step (µm)"))
+        self.z_pose.setObjectName("z_pose")
+        self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser.setGeometry(QtCore.QRect(50, 120, 151, 41))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.textBrowser.setFont(font)
+        self.textBrowser.setReadOnly(True)
+        self.textBrowser.setObjectName("textBrowser")
+        MainWindow.setCentralWidget(self.centralwidget)
+
+
+        self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(50, 530, 311, 61))
+        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setObjectName("gridLayout")
+
+        self.set_big_step = QtWidgets.QSpinBox(self.gridLayoutWidget)
+        self.set_big_step.setMinimum(1)
+        self.set_big_step.setMaximum(10)
+        self.set_big_step.setObjectName("set_big_step")
+        self.set_big_step.valueChanged.connect(self.set_big_step_value)
+
+
+        self.gridLayout.addWidget(self.set_big_step, 1, 0, 1, 1)
+        self.label_set_smol_step = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_set_smol_step.setObjectName("label_set_smol_step")
+        self.gridLayout.addWidget(self.label_set_smol_step, 0, 1, 1, 1)
+
+        self.set_smol_step = QtWidgets.QSpinBox(self.gridLayoutWidget)
+        self.set_smol_step.setMinimum(1)
+        self.set_smol_step.setMaximum(500)
+        self.set_smol_step.setObjectName("set_smol_step")
+        self.set_smol_step.valueChanged.connect(self.set_small_step_value)
+
+        self.gridLayout.addWidget(self.set_smol_step, 1, 1, 1, 1)
+        self.label_set_big_step = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_set_big_step.setObjectName("label_set_big_step")
+        self.gridLayout.addWidget(self.label_set_big_step, 0, 0, 1, 1)
+        MainWindow.setCentralWidget(self.centralwidget)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.x_groupBox.setTitle(_translate("MainWindow", "X-Location"))
+        self.x_right_smol_step.setText(_translate("MainWindow", ">"))
+        self.x_right_big_step.setText(_translate("MainWindow", ">>"))
+        self.x_left_big_step.setText(_translate("MainWindow", "<<"))
+        self.x_left_smol_step.setText(_translate("MainWindow", "<"))
+        self.home_button.setText(_translate("MainWindow", "HOME"))
+        self.set_home_button.setText(_translate("MainWindow", "Set Home"))
+        self.y_groupBox.setTitle(_translate("MainWindow", "Y-Location"))
+        self.y_right_smol_step.setText(_translate("MainWindow", ">"))
+        self.y_right_big_step.setText(_translate("MainWindow", ">>"))
+        self.y_left_big_step.setText(_translate("MainWindow", "<<"))
+        self.y_left_smol_step.setText(_translate("MainWindow", "<"))
+        self.x_groupBox_2.setTitle(_translate("MainWindow", "Z-Location"))
+        self.z_right_smol_step.setText(_translate("MainWindow", ">"))
+        self.z_right_big_step.setText(_translate("MainWindow", ">>"))
+        self.z_left_big_step.setText(_translate("MainWindow", "<<"))
+        self.z_left_smol_step.setText(_translate("MainWindow", "<"))
+        self.label_set_smol_step.setText(_translate("MainWindow", "Set Small Step (nm)"))
+        self.label_set_big_step.setText(_translate("MainWindow", "Set Big Step (µm)"))
+
+    def set_home(self):
+        global x_home, y_home, z_home
+        x_home = self.x_slider.value()
+        y_home = self.y_slider.value()
+        z_home = self.z_slider.value()
+        self.cur_pos()
+
+    def home(self):
+        self.x_slider.setValue(x_home)
+        self.y_slider.setValue(y_home)
+        self.z_slider.setValue(z_home)
+        #self.set_position()
+
+    def on_change_func_x(self):
+        self.x_pose.setText(str(self.x_slider.sender().value()))
+        #self.set_position()
+
+    def on_change_func_y(self):
+        self.y_pose.setText(str(self.y_slider.sender().value()))
+        #self.set_position()
+
+    def on_change_func_z(self):
+        self.z_pose.setText(str(self.z_slider.sender().value()))
+        #self.set_position()
+
+    def cur_pos(self):
+        self.textBrowser.setText(f"{self.x_pose.text()}, {self.y_pose.text()}, {self.z_pose.text()}")
+        #self.set_position()
+        #self.textBrowser.setText(f"(вай красота")
+
+    def move_x_right_small(self):
+        self.x_slider.setValue(self.x_slider.value() + self.small_step)
+        #self.set_position()
+
+    def move_x_right_big(self):
+        self.x_slider.setValue(self.x_slider.value() + self.big_step)
+        #self.set_position()
+
+    def move_x_left_small(self):
+        self.x_slider.setValue(self.x_slider.value() - self.small_step)
+        #self.set_position()
+
+    def move_x_left_big(self):
+        self.x_slider.setValue(self.x_slider.value() - self.big_step)
+        #self.set_position()
+
+    def move_y_right_small(self):
+        self.y_slider.setValue(self.y_slider.value() + self.small_step)
+        #self.set_position()
+
+    def move_y_right_big(self):
+        self.y_slider.setValue(self.y_slider.value() + self.big_step)
+        #self.set_position()
+
+    def move_y_left_small(self):
+        self.y_slider.setValue(self.y_slider.value() - self.small_step)
+        #self.set_position()
+
+    def move_y_left_big(self):
+        self.y_slider.setValue(self.y_slider.value() - self.big_step)
+        #self.set_position()
+
+    def move_z_right_small(self):
+        self.z_slider.setValue(self.z_slider.value() + self.small_step)
+        #self.set_position()
+
+    def move_z_right_big(self):
+        self.z_slider.setValue(self.z_slider.value() + self.big_step)
+        #self.set_position()
+
+    def move_z_left_small(self):
+        self.z_slider.setValue(self.z_slider.value() - self.small_step)
+        #self.set_position()
+
+    def move_z_left_big(self):
+        self.z_slider.setValue(self.z_slider.value() - self.big_step)
+        #self.set_position()
+
+    def set_small_step_value(self):
+        self.small_step = self.set_smol_step.value()
+
+    def set_big_step_value(self):
+        self.big_step = self.set_big_step.value() * 1000
+
+class MyWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(MyWindow, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication([])
+    application = MyWindow()
+    application.show()
+    sys.exit(app.exec())
